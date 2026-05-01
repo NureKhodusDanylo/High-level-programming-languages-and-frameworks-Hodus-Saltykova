@@ -1,0 +1,150 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Пульс Статей</title>
+    <link rel="stylesheet" href="{% static 'articles/css/site.css' %}">
+</head>
+<body class="page">
+    <div class="page-glow page-glow--left"></div>
+    <div class="page-glow page-glow--right"></div>
+
+    <main class="layout">
+        <section class="hero">
+            <div class="hero__content">
+                <p class="hero__eyebrow">Лабораторна робота</p>
+                <h1>Пошук статей за ключовими словами</h1>
+                <p class="hero__subtitle">
+                    Введіть слова, які вас цікавлять, і система миттєво знайде збіги в заголовках та текстах статей.
+                </p>
+
+                <form method="get" class="search-form">
+                    <label for="q" class="search-form__label">Ключові слова</label>
+                    <div class="search-form__row">
+                        <input
+                            id="q"
+                            name="q"
+                            type="text"
+                            value="{{ query }}"
+                            placeholder="Наприклад: django orm адмінка"
+                            class="search-form__input"
+                        >
+                        <button type="submit" class="search-form__button">Знайти</button>
+                    </div>
+                </form>
+
+                <div class="hero__actions">
+                    {% if user.is_authenticated %}
+                        <div class="user-greeting">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                            <span>Вітаємо, <strong>{{ user.username }}</strong></span>
+                        </div>
+                        <i class="action-divider"></i>
+                        <a href="{% url 'articles:logout' %}" class="btn-link">Вийти з системи</a>
+                    {% else %}
+                        <a href="{% url 'articles:register' %}" class="ghost-link">Зареєструватися</a>
+                    {% endif %}
+                    <i class="action-divider"></i>
+                    <a href="/admin/" class="ghost-link">Адмін-панель</a>
+                </div>
+            </div>
+
+            <div class="hero__visual" aria-hidden="true">
+                <svg class="hero-svg" viewBox="0 0 520 420" role="img">
+                    <defs>
+                        <linearGradient id="coreGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#ff6f47" />
+                            <stop offset="50%" stop-color="#f3b33d" />
+                            <stop offset="100%" stop-color="#1ea7a0" />
+                        </linearGradient>
+                        <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" stop-color="#1ea7a0" />
+                            <stop offset="100%" stop-color="#ff6f47" />
+                        </linearGradient>
+                        <filter id="softGlow" x="-50%" y="-50%" width="200%" height="200%">
+                            <feGaussianBlur stdDeviation="6" result="blur"></feGaussianBlur>
+                            <feMerge>
+                                <feMergeNode in="blur"></feMergeNode>
+                                <feMergeNode in="SourceGraphic"></feMergeNode>
+                            </feMerge>
+                        </filter>
+                    </defs>
+
+                    <g class="orbit orbit--a">
+                        <ellipse cx="260" cy="210" rx="170" ry="75"></ellipse>
+                    </g>
+                    <g class="orbit orbit--b">
+                        <ellipse cx="260" cy="210" rx="128" ry="48"></ellipse>
+                    </g>
+
+                    <g class="signal">
+                        <path d="M80 300 C180 265, 340 335, 440 300"></path>
+                        <path d="M95 320 C190 285, 330 355, 425 320"></path>
+                    </g>
+
+                    <g class="core" filter="url(#softGlow)">
+                        <circle cx="260" cy="210" r="68" fill="url(#coreGradient)"></circle>
+                        <circle cx="260" cy="210" r="38" fill="#fefdf7"></circle>
+                        <circle cx="260" cy="210" r="17" fill="#143446"></circle>
+                    </g>
+
+                    <g class="note note--one">
+                        <rect x="116" y="98" width="88" height="68" rx="14"></rect>
+                        <line x1="132" y1="120" x2="188" y2="120"></line>
+                        <line x1="132" y1="136" x2="176" y2="136"></line>
+                    </g>
+                    <g class="note note--two">
+                        <rect x="318" y="85" width="96" height="74" rx="14"></rect>
+                        <line x1="336" y1="109" x2="392" y2="109"></line>
+                        <line x1="336" y1="126" x2="382" y2="126"></line>
+                    </g>
+                    <g class="note note--three">
+                        <rect x="355" y="248" width="86" height="64" rx="14"></rect>
+                        <line x1="372" y1="271" x2="422" y2="271"></line>
+                        <line x1="372" y1="287" x2="410" y2="287"></line>
+                    </g>
+                </svg>
+            </div>
+        </section>
+
+        <section class="article-list">
+            <header class="article-list__header">
+                <h2>Статті</h2>
+                <p class="article-list__meta">
+                    {% if query %}
+                        Запит: <strong>"{{ query }}"</strong> • Знайдено: <strong>{{ results_count }}</strong>
+                    {% else %}
+                        Усього статей: <strong>{{ results_count }}</strong>
+                    {% endif %}
+                </p>
+            </header>
+
+            {% if articles %}
+                <div class="articles-grid">
+                    {% for article in articles %}
+                        <article class="article-card" style="--stagger: {{ forloop.counter0 }};">
+                            <p class="article-card__date">{{ article.published_at|date:"d.m.Y" }}</p>
+                            <h3>
+                                <a class="article-card__title-link" href="{% url 'articles:detail' article.pk %}">
+                                    {{ article.title }}
+                                </a>
+                            </h3>
+                            <p>{{ article.text|truncatechars:220 }}</p>
+                            <a class="article-card__open" href="{% url 'articles:detail' article.pk %}">
+                                Відкрити статтю
+                            </a>
+                        </article>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="empty-state">
+                    <h3>Збігів не знайдено</h3>
+                    <p>Спробуйте інші ключові слова або додайте нову статтю в адмін-панелі.</p>
+                </div>
+            {% endif %}
+        </section>
+    </main>
+</body>
+</html>

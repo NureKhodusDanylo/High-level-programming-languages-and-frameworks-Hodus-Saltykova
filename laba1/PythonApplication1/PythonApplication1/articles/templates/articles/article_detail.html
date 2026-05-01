@@ -1,0 +1,29 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ article.title }} | Пульс Статей</title>
+    <link rel="stylesheet" href="{% static 'articles/css/site.css' %}">
+</head>
+<body class="page">
+    <div class="page-glow page-glow--left"></div>
+    <div class="page-glow page-glow--right"></div>
+
+    <main class="layout">
+        <article class="detail-card">
+            <a class="detail-back" href="{% url 'articles:list' %}">← Повернутися до списку</a>
+            <p class="article-card__date">{{ article.published_at|date:"d.m.Y" }}</p>
+            <h1>{{ article.title }}</h1>
+            <div class="detail-divider"></div>
+            <div class="detail-text">
+                {{ article.text|linebreaks }}
+            </div>
+            <div class="detail-actions">
+                <a class="ghost-link" href="/admin/articles/article/{{ article.pk }}/change/">Редагувати в адмінці</a>
+            </div>
+        </article>
+    </main>
+</body>
+</html>
