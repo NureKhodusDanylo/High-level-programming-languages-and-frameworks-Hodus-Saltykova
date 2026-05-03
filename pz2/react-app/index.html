@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en" class="light">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Практичне заняття 2</title>
+    
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&family=Lexend:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-25..0&display=swap" rel="stylesheet" />
+    
+    <style type="text/tailwindcss">
+        @layer base {
+            body {
+                font-family: 'Be Vietnam Pro', sans-serif;
+            }
+        }
+        @layer utilities {
+            .sketch-border {
+                border: 2px solid #2f3132;
+                border-radius: 4px 8px 3px 6px / 6px 3px 7px 4px;
+            }
+            .sketch-border-thin {
+                border: 1px solid #2f3132;
+                border-radius: 3px 5px 2px 4px / 4px 2px 5px 3px;
+            }
+            .sketch-bg {
+                background-image: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(47,49,50,0.03) 10px, rgba(47,49,50,0.03) 11px);
+            }
+            .sketch-shadow {
+                box-shadow: 3px 4px 0 0 #2f3132;
+            }
+            .sketch-divider {
+                height: 2px;
+                background: linear-gradient(90deg, transparent, #2f3132 10%, #2f3132 90%, transparent);
+            }
+        }
+    </style>
+    
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary-container": "#2f3132",
+                        "tertiary-fixed-dim": "#ffb783",
+                        "tertiary-container": "#502500",
+                        "surface-tint": "#5d5f60",
+                        "on-surface-variant": "#444749",
+                        "primary-fixed": "#e2e2e3",
+                        "on-error-container": "#93000a",
+                        "inverse-surface": "#31312c",
+                        "inverse-on-surface": "#f3f0e9",
+                        "on-secondary": "#ffffff",
+                        "outline-variant": "#c4c7c8",
+                        "on-primary-fixed": "#1a1c1d",
+                        "on-surface": "#1c1c18",
+                        "error": "#ba1a1a",
+                        "on-error": "#ffffff",
+                        "on-primary-fixed-variant": "#454748",
+                        "on-primary-container": "#98999a",
+                        "on-background": "#1c1c18",
+                        "primary-fixed-dim": "#c6c6c7",
+                        "secondary-fixed": "#d4e3ff",
+                        "tertiary": "#301400",
+                        "secondary-fixed-dim": "#a4c9ff",
+                        "surface-dim": "#dcdad3",
+                        "surface-container": "#f1eee7",
+                        "on-secondary-container": "#003e73",
+                        "secondary": "#0060ac",
+                        "surface-variant": "#e5e2db",
+                        "surface-container-high": "#ebe8e1",
+                        "on-tertiary": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "primary": "#1a1c1d",
+                        "secondary-container": "#68abff",
+                        "surface-container-highest": "#e5e2db",
+                        "on-secondary-fixed": "#001c39",
+                        "surface-container-low": "#f6f3ec",
+                        "on-primary": "#ffffff",
+                        "outline": "#747779",
+                        "background": "#fcf9f2",
+                        "error-container": "#ffdad6",
+                        "surface": "#fcf9f2",
+                        "on-secondary-fixed-variant": "#004883",
+                        "inverse-primary": "#c6c6c7",
+                        "on-tertiary-container": "#e57d21",
+                        "on-tertiary-fixed": "#301400",
+                        "surface-bright": "#fcf9f2",
+                        "on-tertiary-fixed-variant": "#713700",
+                        "tertiary-fixed": "#ffdcc5"
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Force fonts on text elements but EXCLUDE material icons */
+        body, h1, h2, h3, h4, h5, h6, p, div, input, button, textarea, select {
+            font-family: 'Be Vietnam Pro', sans-serif;
+        }
+        
+        /* Critical fix for Material Symbols */
+        .material-symbols-outlined {
+            font-family: 'Material Symbols Outlined' !important;
+            font-weight: normal;
+            font-style: normal;
+            font-size: 24px;
+            line-height: 1;
+            letter-spacing: normal;
+            text-transform: none;
+            display: inline-block;
+            white-space: nowrap;
+            word-wrap: normal;
+            direction: ltr;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Lexend for labels and specific elements */
+        .tag, select, button, .font-label-md {
+            font-family: 'Lexend', sans-serif !important;
+        }
+    </style>
+  </head>
+  <body class="bg-[#fcf9f2] text-on-surface min-h-screen selection:bg-tertiary-fixed-dim selection:text-tertiary-container flex justify-center">
+    <div id="root" class="w-full max-w-[1200px] p-4 md:p-8"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

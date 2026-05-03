@@ -11,6 +11,10 @@ def reverse_string(s):
     """
     Рівень 2: Функція, яка приймає рядок та повертає його обернений варіант.
     """
+
+    if s == s[::-1]:
+        return f"!{s}!"
+
     return s[::-1]
 
 class Calculator:
@@ -54,7 +58,7 @@ if __name__ == "__main__":
     
     # Рівень 2
     print("\n[Рівень 2] Реверс рядка:")
-    original_str = "hello"
+    original_str = ""
     reversed_str = reverse_string(original_str)
     print(f"Оригінал: '{original_str}' -> Реверс: '{reversed_str}'")
     
